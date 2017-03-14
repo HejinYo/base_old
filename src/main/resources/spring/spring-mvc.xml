@@ -21,10 +21,17 @@
     <!-- 1: 开启SpirngMVC注解模式，自动注册DefaultAnnotationHandLerMapping等，提供一些列：数据绑定，数字和日期的format 和 xml，json默认读写支持-->
     <mvc:annotation-driven validator="validator">
         <mvc:message-converters>
-            <!--如果用fastJson需要在这配置 -->
+            <!--如果用fastJson需要在这配置,fastJson返回的json会有反斜杠，前端解析麻烦，不推荐使用 -->
             <!--<ref bean="jsonConverter" />-->
             <bean class="org.springframework.http.converter.StringHttpMessageConverter">
-                <constructor-arg value="UTF-8"/>
+                <constructor-arg value="UTF-8" index="0"/>
+                <property name="supportedMediaTypes">
+                    <list>
+                       <!-- <value>text/html;charset=UTF-8</value>-->
+                        <value>text/plain;charset=UTF-8</value>
+                        <value>application/json;charset=UTF-8</value><!-- 按这个先后顺序，根据请求可返回类型，设置Content-Type -->
+                    </list>
+                </property>
             </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>
@@ -32,7 +39,7 @@
     <!-- 当在web.xml 中 DispatcherServlet使用 <url-pattern>/</url-pattern> 映射时，能映射静态资源 -->
     <mvc:default-servlet-handler/>
     <!-- 资源 映射 -->
-    <mvc:resources location="sources" mapping="/sources/**"/>
+    <mvc:resources location="resources" mapping="/resources/**"/>
 
     <!--hibernate校验器-->
     <bean id="validator"
@@ -69,8 +76,6 @@
     <!--默认界面 不通过controller直接返回视图 -->
     <!--<mvc:view-controller path="/" view-name="/to_login" />-->
 
-    <!-- 自定义的全局异常处理器,只要实现HandlerExceptionResolver接口就是全局异常处理器-->
-    <!--<bean class="com.hejinyo.resolver.ExceptionResolver"></bean>-->
     <!-- 登录拦截器 -->
     <mvc:interceptors>
         <mvc:interceptor>

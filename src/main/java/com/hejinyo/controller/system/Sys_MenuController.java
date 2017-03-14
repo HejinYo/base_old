@@ -22,10 +22,9 @@ public class Sys_MenuController {
     @Resource(name = "sysMenuService")
     private Sys_MenuService sysMenuService;
 
-    @RequestMapping(value = "/mutilMenu", method = RequestMethod.GET)
+    @RequestMapping(value = "/mutilMenu", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public Map<String, Object> login() {
-        JsonRetrun jsonRetrun = new JsonRetrun();
+    public String login() {
         Map<String, Object> map = new HashMap<String, Object>();
         //所有菜单
         List<Sys_Menu> sys_menus = sysMenuService.getSys_MenuList();
@@ -49,11 +48,7 @@ public class Sys_MenuController {
         map.put("menu1", menu1);
         map.put("menu2", menu2);
         map.put("menu3", menu3);
-        /*jsonRetrun.setStatus(1);
-        jsonRetrun.setMessage("获取成功");
-        jsonRetrun.setData(map);*//*
-        return jsonRetrun.result();*/
-        return null;
+        return JsonRetrun.result(0, "获取成功", map);
     }
 
     /**
@@ -71,7 +66,7 @@ public class Sys_MenuController {
      *
      * @return
      */
-    @RequestMapping(value = "menuTree", method = RequestMethod.GET)
+    @RequestMapping(value = "menuTree", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public Object menuTree() {
         JSONArray jsonArray = new JSONArray();
@@ -79,24 +74,24 @@ public class Sys_MenuController {
         List<Sys_Menu> sys_menus = sysMenuService.getSys_MenuList();
         for (int i = 0; i < sys_menus.size(); i++) {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("id",String.valueOf(sys_menus.get(i).getMid()));
-            if(0==(sys_menus.get(i).getPid())){
-                jsonObject.put("parent","#");
-            }else {
-                jsonObject.put("parent",String.valueOf(sys_menus.get(i).getPid()));
+            jsonObject.put("id", String.valueOf(sys_menus.get(i).getMid()));
+            if (0 == (sys_menus.get(i).getPid())) {
+                jsonObject.put("parent", "#");
+            } else {
+                jsonObject.put("parent", String.valueOf(sys_menus.get(i).getPid()));
             }
-            jsonObject.put("text",sys_menus.get(i).getMname());
+            jsonObject.put("text", sys_menus.get(i).getMname());
             int menuLevel = sys_menus.get(i).getMlevel();
 
             JSONObject state = new JSONObject();
             if (menuLevel == 1) {
-                state.put("opened",true);
-                jsonObject.put("state",state);
+                state.put("opened", true);
+                jsonObject.put("state", state);
             } else if (menuLevel == 2) {
-                jsonObject.put("state",state);
-                jsonObject.put("icon","fa fa-folder text-primary");
+                jsonObject.put("state", state);
+                jsonObject.put("icon", "fa fa-folder text-primary");
             } else if (menuLevel == 3) {
-                jsonObject.put("icon","fa fa-file text-primary");
+                jsonObject.put("icon", "fa fa-file text-primary");
             }
             jsonArray.add(jsonObject);
         }
@@ -105,8 +100,8 @@ public class Sys_MenuController {
                 "{\"id\":\"3\",\"parent\":\"1\",\"text\":\"Custom Icon\",\"icon\": \"fa fa-warning text-primary\"}," +
                 "{\"id\":\"4\",\"parent\":\"1\",\"text\":\"Initially open\",\"icon\": \"fa fa-folder text-primary\", \"state\": {\"opened\": true}}," +
                 "{\"id\":\"5\",\"parent\":\"4\",\"text\":\"Another node\",\"icon\": \"fa fa-file text-primary\"}]";*/
-       System.out.println(jsonArray.toString());
-       return jsonArray;
+        System.out.println(jsonArray.toString());
+        return jsonArray;
     }
 
 }

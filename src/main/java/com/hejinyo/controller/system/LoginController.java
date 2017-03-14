@@ -34,10 +34,9 @@ public class LoginController {
      *
      * @return
      */
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
-    public Map<String, Object> login(HttpSession session, @RequestBody String json) {
-        JsonRetrun jsonRetrun = new JsonRetrun();
+    public String login(HttpSession session, @RequestBody String json) {
         JSONObject jsonObject = JSONObject.fromObject(json);
         String verifi = jsonObject.getString("verifi");
         String username = jsonObject.getString("username");
@@ -46,24 +45,20 @@ public class LoginController {
         if ("admin".equals(username)) {
             session.removeAttribute(Const.SESSION_VERIFI_KEY);//验证码失效
             session.setAttribute(Const.SESSION_USER_INFO, username);
-          /*  jsonRetrun.setStatus(1);
-            jsonRetrun.setMessage("登录成功！");*/
+            return JsonRetrun.result(0, "登录成功！");
         } else {
-           /* jsonRetrun.setStatus(0);
-            jsonRetrun.setMessage("登录失败");*/
+            return JsonRetrun.result(1, "登录失败！");
         }
-        /*return jsonRetrun.result();*/
-
-        return null;
     }
 
     /**
      * 注销登录
+     *
      * @param session
      * @return
      */
-    @RequestMapping(value = "/logout",method = RequestMethod.GET)
-    public String logout(HttpSession session){
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logout(HttpSession session) {
         session.removeAttribute(Const.SESSION_USER_INFO);
         return "to_login";
     }

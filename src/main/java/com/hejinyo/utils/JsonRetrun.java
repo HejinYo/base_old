@@ -93,4 +93,16 @@ public class JsonRetrun {
         return JsonUtil.object2Json(jsonMap);
     }
 
+    /**
+     * @param excode
+     * @param message
+     * @return {"errorcode":200,"message":"bad request"}
+     */
+    public static String exception(int excode, String message) {
+        Map<String, Object> jsonMap = new HashMap();//存放信息的对象
+        jsonMap.put("excode", excode);
+        jsonMap.put("message", message);
+        return JsonUtil.object2Json(jsonMap);
+    }
+
 }

@@ -149,7 +149,6 @@ public class TestController {
     @RequestMapping("/testJson")
     @ResponseBody
     public Map<String, Object> testJson() {
-        JsonRetrun jsonRetrun = new JsonRetrun();
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         Account account = new Account();
         account.setCustid("s0000001");
@@ -169,7 +168,7 @@ public class TestController {
         return null;
     }
 
-    @RequestMapping("/testJson2")
+    @RequestMapping(value="/testJson2", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Object testJson2() {
         Map<String, String> map1 = new HashMap<String, String>();
@@ -205,10 +204,10 @@ public class TestController {
         String s = jsonMap.toString();
         System.out.println(s);
 
-        return jsonMap;
+        return JsonRetrun.result(1);
     }
 
-    @RequestMapping(value = "/testJson2", method = RequestMethod.GET)
+    @RequestMapping(value = "/testJson3")
     @ResponseBody
     public String gson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
@@ -254,9 +253,17 @@ public class TestController {
     }
 
     @RequestMapping(value = "/html2")
-       public String html() {
-           return "test/Modal2";
-       }
+    @ResponseBody
+    public Object html() {
+        Map<String, Object> jsonMap = new HashMap<String, Object>();
+        int msg = 1;
+        String status = "SUCCESS";
+
+        jsonMap.put("msg", msg);
+        jsonMap.put("status", status);
+        jsonMap.put("data", 123);
+        return jsonMap;
+    }
 
 
     @RequestMapping(value = "/testresponse")

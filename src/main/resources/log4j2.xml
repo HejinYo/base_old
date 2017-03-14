@@ -60,20 +60,20 @@
         <!-- Root -->
         <Root level="${root_level}" includeLocation="false">
             <AppenderRef ref="Console" level="DEBUG"/>
-            <AppenderRef ref="AsyncRollingRandomAccessFile" level="DEBUG"/>
+           <!-- <AppenderRef ref="AsyncRollingRandomAccessFile" level="DEBUG"/>--><!--暂不存放在日志文件中-->
         </Root>
 
         <Logger name="org.springframework" level="DEBUG" additivity="false">
             <AppenderRef ref="Console"/>
-            <AppenderRef ref="RollingRandomAccessFile"/>
+            <!--<AppenderRef ref="AsyncRollingRandomAccessFile"/>-->
         </Logger>
         <Logger name="com.hejinyo.mapper" level="DEBUG" additivity="false">
             <AppenderRef ref="Console"/>
-            <AppenderRef ref="RollingRandomAccessFile" />
+            <!--<AppenderRef ref="AsyncRollingRandomAccessFile" />-->
         </Logger>
         <Logger name="org.mybatis" level="ERROR" additivity="false">
             <AppenderRef ref="Console"/>
-            <AppenderRef ref="RollingRandomAccessFile"/>
+            <!--<AppenderRef ref="AsyncRollingRandomAccessFile"/>-->
         </Logger>
 
         <Logger name="org.springframework.beans.factory.xml.PluggableSchemaResolver" level="ERROR" additivity="false">

@@ -2,6 +2,7 @@ package com.hejinyo.controller.system;
 
 import com.google.code.kaptcha.Producer;
 import com.hejinyo.utils.Const;
+import com.hejinyo.utils.JsonRetrun;
 import com.hejinyo.utils.Tools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,27 +35,23 @@ public class VerifyCodeController {
      * @param code
      * @return
      */
-    @RequestMapping(value = "/verifyCode", method = RequestMethod.POST)
+    @RequestMapping(value = "/verifyCode", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
-    public Map<String, Object> getLoginCode(HttpServletRequest request, HttpSession session, @ModelAttribute("code") String code) {
-        Map<String, Object> modelMap = new HashMap<String, Object>(1);
+    public String getLoginCode(HttpServletRequest request, HttpSession session, @ModelAttribute("code") String code) {
                /*Enumeration enu=request.getHeaderNames();//取得全部头信息
                while(enu.hasMoreElements()) {//以此取出头信息
                    String headerName = (String) enu.nextElement();
                    String headerValue = request.getHeader(headerName);//取出头信息内容
                    System.out.println(headerName+":"+headerValue);
                }*/
-        boolean flag = false;
+        int flag = 1;
         if (Tools.notEmpty(code)) {/*Constants.KAPTCHA_SESSION_KEY ，自带的常量*/
             String sessionCode = (String) session.getAttribute(Const.SESSION_VERIFI_KEY);
-            if (code.equalsIgnoreCase(sessionCode)) {
-                flag = true;
-            } else if (code.equalsIgnoreCase("aaaa")) {
-                flag = true;//测试使用
+            if (code.equalsIgnoreCase(sessionCode) || code.equalsIgnoreCase("aaaa")) {
+                flag = 0;
             }
         }
-        modelMap.put("flag", flag);
-        return modelMap;
+        return JsonRetrun.result(flag);
     }
 
     /**
