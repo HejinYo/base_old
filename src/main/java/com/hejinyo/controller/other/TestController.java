@@ -7,12 +7,17 @@ import com.hejinyo.service.other.impl.AccountServiceImpl;
 import com.hejinyo.utils.JsonRetrun;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -157,10 +162,11 @@ public class TestController {
         jsonMap.put("number", 20122281);
         jsonMap.put("list", list);
         jsonMap.put("account", account);
-        jsonRetrun.setData(jsonMap);
+        /*jsonRetrun.setData(jsonMap);
         jsonRetrun.setStatus(1);
         jsonRetrun.setMessage("登录成功");
-        return jsonRetrun.result();
+        return jsonRetrun.result();*/
+        return null;
     }
 
     @RequestMapping("/testJson2")
@@ -217,5 +223,55 @@ public class TestController {
         jsonMap.put("data", 123);
         System.out.println(gson.toJson(jsonMap));
         return gson.toJson(jsonMap);
+    }
+
+    @RequestMapping(value = "/testExcrption")
+    @ResponseBody
+    public String testExcrption(HttpServletRequest request) {
+        String s = "";
+        Enumeration enu = request.getHeaderNames();//取得全部头信息
+        while (enu.hasMoreElements()) {//以此取出头信息
+            String headerName = (String) enu.nextElement();
+            String headerValue = request.getHeader(headerName);//取出头信息内容
+            s += headerName + ":" + headerValue + "<br>";
+            //System.out.println(headerName + ":" + headerValue);
+        }
+        String s1 = null;
+        //s1.length();
+        int x = 1 / 0;
+        //throw new RuntimeException("xxx");
+        return s;
+    }
+
+    @RequestMapping(value = "/excptionView")
+    public String excptionView() {
+        return "test/exception";
+    }
+
+    @RequestMapping(value = "/html1")
+    public String html1() {
+        return "test/Modal";
+    }
+
+    @RequestMapping(value = "/html2")
+       public String html() {
+           return "test/Modal2";
+       }
+
+
+    @RequestMapping(value = "/testresponse")
+    public void testresponse(HttpServletRequest request, HttpServletResponse response) {
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setHeader("Cache-Control", "no-cache");
+        response.setStatus(HttpStatus.OK.value());
+        try {
+            response.getWriter().print("test");
+            response.getWriter().print("test2");
+            response.getWriter().print("test3");
+            response.getWriter().flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

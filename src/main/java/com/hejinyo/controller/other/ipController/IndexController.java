@@ -2,12 +2,19 @@ package com.hejinyo.controller.other.ipController;
 
 import com.hejinyo.common.PageParam;
 import com.hejinyo.mapper.other.TableIpMapper;
+import com.hejinyo.model.other.TableIp;
 import com.hejinyo.service.other.ITableIpService;
+import com.sun.javafx.sg.prism.NGShape;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 
 @Controller
@@ -39,5 +46,32 @@ public class IndexController {
         pageParam = service.getIpListByPage(pageParam);
         request.setAttribute("pageParam", pageParam);
         return "page/index";
+    }
+
+    @RequestMapping("/ip/to_add")
+    public String to_add(Model model) {
+        model.addAttribute("result", "请添加数据！");
+        return "/page/to_add";
+    }
+
+    @RequestMapping("/ip/add")
+    public String add(Model model, @Validated TableIp tableIp, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            List<ObjectError> allError = bindingResult.getAllErrors();
+            for(ObjectError o: allError){
+                System.out.println(o.getDefaultMessage());
+            }
+            model.addAttribute("validated", bindingResult.getAllErrors());
+            model.addAttribute("result", "数据不合法，添加失败！");
+        } else {
+            int count = service.addTable_Ip(tableIp);
+            if (count > 0) {
+                model.addAttribute("result", "添加成功！");
+            } else {
+                model.addAttribute("result", "数据库，添加失败！");
+            }
+        }
+        return "/page/to_add";
     }
 }

@@ -21,10 +21,11 @@ public class Jzt_GpsController {
     public Map<String, Object> index() {
         List<Jzt_Gps> jzt_gpss = jzt_gpsService.getJzt_GpsList();
         JsonRetrun jsonRetrun = new JsonRetrun();
-        jsonRetrun.setStatus(1);
+       /* jsonRetrun.setStatus(1);
         jsonRetrun.setMessage("请求成功");
         jsonRetrun.setData(jzt_gpss);
-        return jsonRetrun.result();
+        return jsonRetrun.result();*/
+       return null;
     }
 
     //url参数
@@ -41,13 +42,14 @@ public class Jzt_GpsController {
         if (!"".equals(jzt_gps.getDevid()) && null != jzt_gps.getDevid()) {
             int count = jzt_gpsService.addJzt_Gps(jzt_gps);
             if (count > 0) {
-                jsonRetrun.setStatus(1);
-                jsonRetrun.setMessage("增加成功");
+               /* jsonRetrun.setStatus(1);
+                jsonRetrun.setMessage("增加成功");*/
             }
         } else {
-            jsonRetrun.setMessage("devid不能为空");
+            /*jsonRetrun.setMessage("devid不能为空");*/
         }
-        return jsonRetrun.result();
+        /*return jsonRetrun.result();*/
+        return null;
     }
 
     //路径参数
@@ -61,12 +63,13 @@ public class Jzt_GpsController {
         jzt_gps.setLatitude(latitude);
         int count = jzt_gpsService.addJzt_Gps(jzt_gps);
         if (count > 0) {
-            jsonRetrun.setStatus(1);
-            jsonRetrun.setMessage("增加成功");
+           /* jsonRetrun.setStatus(1);
+            jsonRetrun.setMessage("增加成功");*/
         } else {
-            jsonRetrun.setMessage("删除失败");
+            /*jsonRetrun.setMessage("删除失败");*/
         }
-        return jsonRetrun.result();
+        /*return jsonRetrun.result();*/
+        return null;
     }
 
     //restful_add
@@ -77,13 +80,15 @@ public class Jzt_GpsController {
         if (!"".equals(jzt_gpss.getDevid())) {
             int count = jzt_gpsService.addJzt_Gps(jzt_gpss);
             if (count > 0) {
-                jsonRetrun.setStatus(1);
-                jsonRetrun.setMessage("增加成功");
+                /*jsonRetrun.setStatus(1);
+                jsonRetrun.setMessage("增加成功");*/
             }
         } else {
-            jsonRetrun.setMessage("devid不能为空");
+            /*jsonRetrun.setMessage("devid不能为空");*/
         }
-        return jsonRetrun.result();
+       /* return jsonRetrun.result();*/
+
+        return null;
     }
 
 }

@@ -20,6 +20,13 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public List<Account> getAllAccounts(Account account) {
+        System.out.println(System.getProperty("user.dir").replace("bin", "webapps"));
+        System.out.println(Thread.currentThread().getContextClassLoader().getResource(""));
+        System.out.println(this.getClass().getResource("/"));
+        String s = this.getClass().getResource("/").toString();
+
+        System.out.println("------------------------=========");
+        System.out.println(s);
         return accountMapper.getAllAccounts(account);
     }
 

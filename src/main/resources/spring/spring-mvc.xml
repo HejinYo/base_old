@@ -12,14 +12,14 @@
 
 
     <!-- 扫描service 包下面 controller 使用注解的类型 -->
-    <context:component-scan base-package="com.hejinyo.controller"/>
+    <context:component-scan base-package="com.hejinyo.controller,com.hejinyo.resolver"/>
     <!-- 配置Spirng MVC -->
 
     <!-- 自动注入。 当使用 <context:component-scan/> 后，就可以将其移除了-->
     <!--<context:annotation-config/>-->
 
     <!-- 1: 开启SpirngMVC注解模式，自动注册DefaultAnnotationHandLerMapping等，提供一些列：数据绑定，数字和日期的format 和 xml，json默认读写支持-->
-    <mvc:annotation-driven>
+    <mvc:annotation-driven validator="validator">
         <mvc:message-converters>
             <!--如果用fastJson需要在这配置 -->
             <!--<ref bean="jsonConverter" />-->
@@ -34,9 +34,29 @@
     <!-- 资源 映射 -->
     <mvc:resources location="sources" mapping="/sources/**"/>
 
-    <!--hibernate验证-->
-    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+    <!--hibernate校验器-->
+    <bean id="validator"
+          class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <!-- hibernate校验器-->
         <property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
+        <!-- 指定校验使用的资源文件，在文件中配置校验错误信息，如果不指定则默认使用classpath下的ValidationMessages.properties -->
+        <property name="validationMessageSource" ref="messageSource"/>
+    </bean>
+    <!-- 校验错误信息配置文件 -->
+    <bean id="messageSource"
+          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <!-- 资源文件名-->
+        <property name="basenames">
+            <list>
+                <!-- 文件结尾必须是.properties,但是这个不写，虽然idea报错，但规则是正确的 -->
+                <value>classpath:properties/messages</value>
+                <value>org.hibernate.validator.ValidationMessages</value>
+            </list>
+        </property>
+        <!-- 资源文件编码格式 -->
+        <property name="defaultEncoding" value="UTF-8"/>
+        <!-- 对资源文件内容缓存时间，单位秒 -->
+        <property name="cacheSeconds" value="120"/>
     </bean>
 
     <!-- 模型解析器 -->
@@ -49,6 +69,8 @@
     <!--默认界面 不通过controller直接返回视图 -->
     <!--<mvc:view-controller path="/" view-name="/to_login" />-->
 
+    <!-- 自定义的全局异常处理器,只要实现HandlerExceptionResolver接口就是全局异常处理器-->
+    <!--<bean class="com.hejinyo.resolver.ExceptionResolver"></bean>-->
     <!-- 登录拦截器 -->
     <mvc:interceptors>
         <mvc:interceptor>

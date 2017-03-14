@@ -17,4 +17,6 @@ public interface TableIpMapper extends BaseMapper {
 
 	public List<TableIp> fetchByParams(Map<String, Object> params);
 
+	public int addTable_Ip(TableIp tableIp);
+
 }

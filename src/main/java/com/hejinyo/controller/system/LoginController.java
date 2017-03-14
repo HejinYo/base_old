@@ -46,13 +46,15 @@ public class LoginController {
         if ("admin".equals(username)) {
             session.removeAttribute(Const.SESSION_VERIFI_KEY);//验证码失效
             session.setAttribute(Const.SESSION_USER_INFO, username);
-            jsonRetrun.setStatus(1);
-            jsonRetrun.setMessage("登录成功！");
+          /*  jsonRetrun.setStatus(1);
+            jsonRetrun.setMessage("登录成功！");*/
         } else {
-            jsonRetrun.setStatus(0);
-            jsonRetrun.setMessage("登录失败");
+           /* jsonRetrun.setStatus(0);
+            jsonRetrun.setMessage("登录失败");*/
         }
-        return jsonRetrun.result();
+        /*return jsonRetrun.result();*/
+
+        return null;
     }
 
     /**

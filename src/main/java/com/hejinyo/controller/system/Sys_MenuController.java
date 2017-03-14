@@ -49,10 +49,11 @@ public class Sys_MenuController {
         map.put("menu1", menu1);
         map.put("menu2", menu2);
         map.put("menu3", menu3);
-        jsonRetrun.setStatus(1);
+        /*jsonRetrun.setStatus(1);
         jsonRetrun.setMessage("获取成功");
-        jsonRetrun.setData(map);
-        return jsonRetrun.result();
+        jsonRetrun.setData(map);*//*
+        return jsonRetrun.result();*/
+        return null;
     }
 
     /**

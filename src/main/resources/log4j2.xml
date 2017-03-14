@@ -12,7 +12,7 @@
         <Property name="log_file_name">${log_home}/${application_name}/${application_name}.log</Property>
         <Property name="log_rolling_file_name">${log_home}/${application_name}/%d{yyyy-MM-dd}/%d{yyyy-MM-dd}-%i.log</Property>
         <Property name="log_pattern_file">[%p]-%d{yyyy-MM-dd HH:mm:ss.SSS} %t %c - {%m}%n</Property>
-        <Property name="log_pattern_console">%d{yy-MM-dd HH:mm:ss} %p %c - {%m}%n</Property>
+        <Property name="log_pattern_console">%d{yyyy-MM-dd HH:mm:ss} %p %c - {%m}%n</Property>
         <!--数据库参数-->
         <!--<Property name="db.tableName">tg_c_log</Property>
         <Property name="db.connectionFactoryClass">com.turingoal.common.support.jdbc.TgSystemConnectionFactory</Property>

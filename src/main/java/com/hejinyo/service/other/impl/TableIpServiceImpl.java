@@ -60,4 +60,9 @@ public class TableIpServiceImpl implements ITableIpService {
 		return sBuilder.toString();
 	}
 
+	@Override
+	public int addTable_Ip (TableIp tableIp){
+        return dao.addTable_Ip(tableIp);
+    }
+
 }

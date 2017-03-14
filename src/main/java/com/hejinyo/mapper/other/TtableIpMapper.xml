@@ -6,6 +6,11 @@
 	<select id="getRowCount" resultType="int">
 		select count(*) from table_ip
 	</select>
+
+    <insert id="addTable_Ip" parameterType="com.hejinyo.model.other.TableIp">
+        insert into table_ip(ip,port,isp)
+          values('${ip}','${port}','${isp}')
+    </insert>
 	
 	<select id="selectByParams" resultType="com.hejinyo.model.other.TableIp" parameterType="map">
 		select * from table_ip

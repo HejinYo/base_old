@@ -12,43 +12,85 @@ import java.util.Map;
  * @since 1.0
  */
 public class JsonRetrun {
-    private int status;  //结果标识：0：失败  1：成功
-    private String message;  //结果信息：失败时为失败原因，必须设置值；成功时为操作数据行数
-    private Object data; //扩展内容：可以发送map、list等其他所有的对象
+    private static final int SUCCESS = 0;
+    private static final int FAULT = 1;
 
     /**
-     * 返回Map类型结果
-     * @return Map<String, Object>
+     * status;   //结果标识：0：成功  1：失败
+     * message;  //结果信息：失败时为失败原因，成功就填写详细信息
+     * data;     //数据内容：可以发送map、list等其他所有的对象
      */
-    public Map<String, Object> result() {
-        Map<String, Object> jsonMap = new HashMap<String, Object>();
-        jsonMap.put("status", getStatus());
-        jsonMap.put("message", getMessage());
-        jsonMap.put("data", getData());
-        return jsonMap;
+
+    public JsonRetrun() {
+        throw new Error("工具类不能实例化！");
     }
 
-    private int getStatus() {
-        return status;
+    /**
+     * @return {"status":0}
+     */
+    public static String result() {
+        Map<String, Object> jsonMap = new HashMap();//存放信息的对象
+        jsonMap.put("status", SUCCESS);
+        return JsonUtil.object2Json(jsonMap);
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    /**
+     * @param status
+     * @return {"status":1}
+     */
+    public static String result(int status) {
+        Map<String, Object> jsonMap = new HashMap();//存放信息的对象
+        jsonMap.put("status", status);
+        return JsonUtil.object2Json(jsonMap);
     }
 
-    private String getMessage() {
-        return message;
+    /**
+     * @param message
+     * @return {"message":"成功","status":0}
+     */
+    public static String result(String message) {
+        Map<String, Object> jsonMap = new HashMap();//存放信息的对象
+        jsonMap.put("status", SUCCESS);
+        jsonMap.put("message", message);
+        return JsonUtil.object2Json(jsonMap);
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    /**
+     * @param status
+     * @param message
+     * @return {"message":"失败","status":1}
+     */
+    public static String result(int status, String message) {
+        Map<String, Object> jsonMap = new HashMap();//存放信息的对象
+        jsonMap.put("status", status);
+        jsonMap.put("message", message);
+        return JsonUtil.object2Json(jsonMap);
     }
 
-    private Object getData() {
-        return data;
+    /**
+     * @param status
+     * @param data
+     * @return {"data":["1","2"],"status":0}
+     */
+    public static String result(int status, Object data) {
+        Map<String, Object> jsonMap = new HashMap();//存放信息的对象
+        jsonMap.put("status", status);
+        jsonMap.put("data", data);
+        return JsonUtil.object2Json(jsonMap);
     }
 
-    public void setData(Object data) {
-        this.data = data;
+    /**
+     * @param status
+     * @param message
+     * @param data
+     * @return {"data":["1","2"],"message":"成功","status":0}
+     */
+    public static String result(int status, String message, Object data) {
+        Map<String, Object> jsonMap = new HashMap();//存放信息的对象
+        jsonMap.put("status", status);
+        jsonMap.put("message", message);
+        jsonMap.put("data", data);
+        return JsonUtil.object2Json(jsonMap);
     }
+
 }
