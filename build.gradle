@@ -25,12 +25,15 @@ dependencies {
     //应用格式2: compile/testCompile group: 'packageName', name: 'artifactId', version: 'version'
     testCompile group: 'junit', name: 'junit', version: '4.12' //测试时
     /* Start LOG */
-    compile 'org.apache.logging.log4j:log4j-core:2.3'//运行时
+    //compile 'org.slf4j:slf4j-nop:1.7.22'
     compile 'org.apache.logging.log4j:log4j-jcl:2.3'//运行时
+    compile 'org.apache.logging.log4j:log4j-core:2.3'//运行时
+    compile 'org.slf4j:slf4j-nop:1.7.23'
+
     /* End Log */
     /* Start database pool */
-    compile 'mysql:mysql-connector-java:5.1.30' //运行时
     compile 'com.alibaba:druid:1.0.27'
+    compile 'mysql:mysql-connector-java:5.1.30' //运行时
     /* End database pool */
     /* Start Mybatis */
     compile 'org.mybatis:mybatis:3.4.1'
@@ -39,41 +42,43 @@ dependencies {
     /* End Mybatis */
     /* Start Servlet web */
     compile 'javax:javaee-api:7.0'
-    providedCompile 'javax.servlet:javax.servlet-api:3.1.0' // 编译期
     compile 'taglibs:standard:1.1.2'
+    //providedRuntime 'org.apache.tomcat:juli:6.0.48'
+    //compile 'javax.servlet:jstl:1.2'
     providedRuntime 'jstl:jstl:1.2' //运行时
+    providedCompile 'javax.servlet:javax.servlet-api:3.1.0' // 编译期
     /* End Servlet web */
     /* Start Spring */
-    /* 1、spring 核心依赖 */
-    compile 'org.springframework:spring-core:4.3.3.RELEASE'
-    compile 'org.springframework:spring-beans:4.3.3.RELEASE'
-    compile 'org.springframework:spring-context:4.3.3.RELEASE'
-    compile 'org.springframework:spring-aspects:4.3.3.RELEASE'
-    /* 2、spring dao依赖 */
     compile 'org.springframework:spring-jdbc:4.3.3.RELEASE'
-    compile 'org.springframework:spring-tx:4.3.3.RELEASE'
-    /* 3、spring web依赖 */
-    compile 'org.springframework:spring-web:4.3.3.RELEASE'
-    compile 'org.springframework:spring-webmvc:4.3.3.RELEASE'
-    /* 4、spring test依赖 */
     compile 'org.springframework:spring-test:4.3.3.RELEASE'
+    compile 'org.springframework:spring-webmvc:4.3.3.RELEASE'
+    compile 'org.springframework:spring-aspects:4.3.3.RELEASE'
     /* End Spring */
     /* Start hibernate验证依赖 */
-    compile 'javax.validation:validation-api:1.1.0.Final'
     compile 'org.hibernate:hibernate-validator:5.2.4.Final'
     /* End hibernate */
     /* Start 验证码 */
     compile 'com.github.penggle:kaptcha:2.3.2'
     /* End 验证码 */
     /* Start json */
-    compile 'net.sf.json-lib:json-lib:2.4:jdk15'
-    compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.alibaba:fastjson:1.2.23'
+    compile 'com.google.code.gson:gson:2.8.0'
+    compile 'net.sf.json-lib:json-lib:2.4:jdk15'
     /* End json */
+    /* Start shiro*/
+    compile  'org.apache.shiro:shiro-spring:1.4.0-RC2'
+    compile  'org.apache.shiro:shiro-ehcache:1.4.0-RC2'
+    /* End shiro*/
     /* Start other */
     compile 'org.projectlombok:lombok:1.16.12'
+    compile 'org.jodd:jodd-core:3.8.1'
     /*compile 'net.sourceforge.jexcelapi:jxl:2.6.12'*/
     /* End other */
+    
+    /*test*/
+    // https://mvnrepository.com/artifact/org.apache.ant/ant
+    compile 'org.apache.ant:ant:1.10.0'
+    /*end test*/
 }
 
 //打包的时候 src内的所有的xml文件
